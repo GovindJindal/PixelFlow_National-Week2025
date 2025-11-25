@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now Playing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f0f0; /* A neutral background for the page */
+        }
+
+        .player-container {
+            width: 350px;
+            background: linear-gradient(to bottom, #2DD4BF, #37D645); /* Gradient from the image */
+            border-radius: 30px;
+            padding: 25px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative; /* For absolute positioning of some elements if needed */
+            box-sizing: border-box; /* Include padding in the width */
+        }
+
+        .header {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .album-art-wrapper {
+            width: 90%;
+            max-width: 280px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .album-art {
+            width: 100%;
+            display: block;
+        }
+
+        .song-details {
+            margin-bottom: 25px;
+        }
+
+        .song-title {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2.8em;
+            font-weight: normal;
+            margin: 0;
+            color: white;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .artist-name {
+            font-size: 1.2em;
+            margin-top: 5px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .progress-bar-container {
+            width: 90%;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .progress {
+            width: 50%; /* Example: 50% played */
+            height: 100%;
+            background-color: white;
+            border-radius: 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .time-stamps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            margin-top: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px; /* Space between icons and play button */
+        }
+
+        .controls i {
+            font-size: 2.2em;
+            cursor: pointer;
+            color: white;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+        }
+
+        .play-button {
+             /* Assuming you want some container styles for the play button */
+        }
+
+        .play-icon {
+            font-size: 2.5em;
+            color: #37D645; /* Green color for the play icon */
+            transform: translateX(0px); /* Slightly shift to center the triangle visually */
+        }
+
+        .bottom-icons {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 15px; /* Adjust padding to match image */
+            box-sizing: border-box;
+            margin-top: 25px; /* Added margin for spacing */
+        }
+
+        .bottom-icons i {
+            font-size: 1.8em;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.8);
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.1));
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container">
+        <div class="header">
+            Now Playing
+        </div>
+        <div class="album-art-wrapper">
+            <img src="/Users/govindjindal/Documents/Evolve AI/Pixel-Vibe Coding/The Beatles.png" alt="The Beatles Live London 1965" class="album-art">
+        </div>
+        <div class="song-details">
+            <h2 class="song-title">LET IT BE</h2>
+            <p class="artist-name">The Beatles</p>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <div class="time-stamps">
+                <span class="current-time">0:59</span>
+                <span class="total-time">2:00</span>
+            </div>
+        </div>
+        <div class="controls">
+            <i class="fas fa-backward skip-backward"></i>
+            <div class="play-button">
+                <i class="fas fa-play play-icon"></i>
+            </div>
+            <i class="fas fa-forward skip-forward"></i>
+        </div>
+        <div class="bottom-icons">
+            <i class="fas fa-random shuffle-icon"></i>
+            <i class="fas fa-download download-icon"></i>
+        </div>
+    </div>
+</body>
+</html>

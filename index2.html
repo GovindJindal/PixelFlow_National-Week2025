@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;550;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --light-text-color: #BBBBBB;
+            --accent-purple: #8B008B; /* Darker shade of purple for gradients */
+            --accent-pink: #FF1493; /* Brighter pink for gradients */
+            --gradient-start-trending: #f09433; /* Instagram gradient feel */
+            --gradient-middle-trending: #e6683c;
+            --gradient-end-trending: #fcaf45;
+            --gradient-start-popular: #FF69B4; /* Hot pink */
+            --gradient-end-popular: #BA55D3; /* Medium Orchid */
+            --gradient-start-recently: #FF4500; /* Orange Red */
+            --gradient-end-recently: #FF8C00; /* Dark Orange */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 600px; /* Adjust based on typical mobile screen width */
+            margin: 0 auto;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #1a1a1a;
+            border-radius: 30px;
+            padding: 10px 15px;
+            margin-bottom: 30px;
+        }
+
+        .search-bar img {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            filter: invert(60%); /* Adjust icon color */
+        }
+
+        .search-bar input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--light-text-color);
+            font-size: 16px;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 550; /* Semi-bold */
+        }
+
+        /* Section Header */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0px;
+        }
+
+        .section-header h2 {
+            font-size: 22px;
+            font-weight: 600; /* Semi-bold */
+            margin: 0;
+        }
+
+        .section-header .show-all {
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Card List */
+        .card-list {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+            padding-bottom: 20px; /* Space for scrollbar */
+            margin-bottom: 30px;
+            scroll-snap-type: x mandatory; /* Optional: for snapping to cards */
+        }
+
+        .card-list::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .card-list::-webkit-scrollbar-thumb {
+            background-color: #444;
+            border-radius: 10px;
+        }
+
+        .card-list::-webkit-scrollbar-track {
+            background-color: #222;
+            border-radius: 10px;
+        }
+
+        /* Card styles */
+        .card {
+            flex-shrink: 0; /* Prevent cards from shrinking */
+            width: 120px;
+            text-align: left;
+            scroll-snap-align: start; /* Optional: for snapping */
+        }
+
+        .card-image-wrapper {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            position: relative;
+            background-color: #333; /* Fallback */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-image-wrapper.square {
+             border-radius: 15px;
+        }
+
+        .card-image-wrapper.circle {
+             border-radius: 50%;
+        }
+
+        .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Specific gradient backgrounds for image wrappers */
+        .card-image-wrapper.gradient-trending-1 {
+            background: radial-gradient(circle at top left, var(--gradient-start-trending) 0%, var(--gradient-middle-trending) 50%, var(--gradient-end-trending) 100%);
+        }
+        .card-image-wrapper.gradient-trending-2 {
+            background: linear-gradient(135deg, #FF6B6B, #556270); /* Example subtle gradient */
+        }
+         .card-image-wrapper.gradient-trending-3 {
+            background: linear-gradient(45deg, #00C6FF 0%, #0072FF 100%); /* Blue gradient */
+            color: var(--text-color); /* For text inside */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .card-image-wrapper.gradient-trending-3 p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+         .card-image-wrapper.gradient-trending-3 small {
+            font-size: 11px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .card-image-wrapper.gradient-popular-1,
+        .card-image-wrapper.gradient-popular-2,
+        .card-image-wrapper.gradient-popular-3 {
+            background: linear-gradient(135deg, var(--gradient-start-popular) 0%, var(--gradient-end-popular) 100%);
+        }
+
+        .card-image-wrapper.gradient-recently-1,
+        .card-image-wrapper.gradient-recently-2,
+        .card-image-wrapper.gradient-recently-3 {
+            background: linear-gradient(135deg, var(--gradient-start-recently) 0%, var(--gradient-end-recently) 100%);
+        }
+
+        /* Text below cards */
+        .card-title {
+            font-size: 14px;
+            font-weight: 550; /* Semi-bold */
+            color: var(--text-color);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--light-text-color);
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Icon for 'Internet Hits' */
+        .internet-hits-icon {
+            width: 80%; /* Adjust size of the PC icon */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNhYWFhYWEiIHN0cm9va2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCI+PC9jaXJjbGU+PGxpbmUgeDE9IjIxIiB5MT0iMjEiIHgyPSIxNi42NSIgeTI9IjE2LjY1Ij48L2xpbmU+PC9zdmc+" alt="Search">
+            <input type="text" placeholder="What would you like to play?">
+        </div>
+
+        <div class="section-header">
+            <h2>Trending</h2><br><br><br>
+            <a href="#" class="show-all">Show All</a>
+        </div>
+        <div class="card-list">
+            <div class="card">
+                <div class="card-image-wrapper square">
+                    <img src="https://i.scdn.co/image/ab67616d0000b2733dc5639cb321a69b721bed92" alt="For A Reason Album Art">
+                </div>
+                <p class="card-title">For A Reason</p>
+                <p class="card-subtitle">Karan Aujla</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square">
+                    <img src="https://images.genius.com/a9143117b858d486a6869008f9c83f88.1000x1000x1.png" alt="Pardesiyan Album Art">
+                </div>
+                <p class="card-title"> Pardesiya</p>
+                <p class="card-subtitle">Sachin Jigar, Sonu Nigam</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square">
+                    <img src="https://images.genius.com/cd7a7d1b325dbdf688340169b54efd42.1000x1000x1.jpg" alt="Sirra Album Art">
+                </div>
+                <p class="card-title">Sirra</p>
+                <p class="card-subtitle">Guru Randhawa</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square">
+                    <img src="https://images.genius.com/d6c0d362fafa78f5cac77a125b99708f.554x554x1.jpg" alt="Summer High Album Art">
+                </div>
+                <p class="card-title">Summer High</p>
+                <p class="card-subtitle">AP Dhillon</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square">
+                    <img src="https://i.scdn.co/image/ab67616d00001e02566512ae287544a1b8e88046" alt="Lor Lor Album Art">
+                </div>
+                <p class="card-title">Lor Lor</p>
+                <p class="card-subtitle">Jassie Gill</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Aashiqui_2.jpeg/250px-Aashiqui_2.jpeg" alt="Aashiqui Album Art">
+                </div>
+                <p class="card-title">Aashiqui</p>
+                <p class="card-subtitle">Mithoon</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square gradient-trending-4">
+                    <img src="https://i.scdn.co/image/ab67616d0000b273d20231861e86a6f74ef2393e" alt="Water Album Art">
+                </div>
+                <p class="card-title">Water</p>
+                <p class="card-subtitle">Tyla</p>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Popular Artists</h2><br><br>
+            <a href="#" class="show-all">Show All</a>
+        </div>
+        <div class="card-list">
+            <div class="card">
+                <div class="card-image-wrapper circle gradient-popular-1">
+                    <img src="https://i.scdn.co/image/ab6761610000517478e45cfa4697ce3c437cb455" alt="Sabrina Carpenter">
+                </div>
+                <p class="card-title">Sabrina Carpenter</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper circle gradient-popular-2">
+                    <img src="https://a10.gaanacdn.com/gn_img/artists/Dk9KNk23Bx/k9KNqJJbBx/size_m_1739172212.jpg" alt="Arijit Singh">
+                </div>
+                <p class="card-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arijit Singh</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper circle gradient-popular-3">
+                    <img src="https://www.restartbooking.com/_next/image?url=%2Fimg%2Fartists%2Falan-walker.png&w=1080&q=75" alt="Alan Walker">
+                </div>
+                <p class="card-title">&nbsp;&nbsp;&nbsp;&nbsp;Alan Walker</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper circle">
+                    <img src="https://i.scdn.co/image/ab6761610000e5ebbc7e4fffd515b47ff1ebbc1f" alt="Honey Singh">
+                </div>
+                <p class="card-title">&nbsp;&nbsp;&nbsp;&nbsp;Honey Singh</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper circle">
+                    <img src="https://i.scdn.co/image/ab67616100005174b19af0ea736c6228d6eb539c" alt="A.R. Rahman">
+                </div>
+                <p class="card-title">&nbsp;&nbsp;&nbsp;A.R. Rahman</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper circle">
+                    <img src="https://i.scdn.co/image/ab6761610000e5eb58b4b9419486550f6fda0535" alt="Shawn Mendes">
+                </div>
+                <p class="card-title">&nbsp;Shawn Mendes</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper circle">
+                    <img src="https://i.scdn.co/image/ab6761610000e5ebfc043bea91ac91c222d235c9" alt="Diljit Dosanjh">
+                </div>
+                <p class="card-title">&nbsp;&nbsp;Diljit Dosanjh</p>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Recently Played</h2><br><br><br>
+        </div>
+        <div class="card-list">
+            <div class="card">
+                <div class="card-image-wrapper square gradient-recently-1">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/The_Weeknd_-_Blinding_Lights.png/250px-The_Weeknd_-_Blinding_Lights.png" alt="Blinding Lights Album Art">
+                </div>
+                <p class="card-title">Blinding Lights</p>
+                <p class="card-subtitle">The Weeknd</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square gradient-recently-2">
+                    <img src="https://c.saavncdn.com/687/Dhundhala-Hindi-2022-20220214181940-500x500.jpg" alt="Dhushdhla Album Art">
+                </div>
+                <p class="card-title">Dhundhla</p>
+                <p class="card-subtitle">Yashraj, Talwinder</p>
+            </div>
+            <div class="card">
+                <div class="card-image-wrapper square gradient-recently-3">
+                    <img src="https://cdn-images.dzcdn.net/images/cover/dd6fe7fa9267185c4b835bd4f155d1d2/1900x1900-000000-81-0-0.jpg" alt="STAY Album Art">
+                </div>
+                <p class="card-title">STAY (with Justin Beiber)</p>
+                <p class="card-subtitle">The KID LAROI</p>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
